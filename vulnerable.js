@@ -10,9 +10,7 @@ app.get("/search", (req, res) => {
 
   // Intentionally vulnerable: untrusted input enters SQL.
   const query =
-    "SELECT * FROM users WHERE username = '" +
-    username +
-    "'";
+    "SELECT * FROM users WHERE username = ?";
 
   db.all(query, (err, rows) => {
     if (err) {
