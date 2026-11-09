@@ -3,9 +3,12 @@ name: SCA - Dependency Security Scan
 on:
   push:
     branches: [main, fix-sca-vulnerabilities]
+    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
   sca-scan:
@@ -19,9 +22,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
 
       - name: Run SCA Scan
+        run: npm audit --audit-level=high
         run: npm audit --audit-level=high
